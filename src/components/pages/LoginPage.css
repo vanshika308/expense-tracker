@@ -13,7 +13,7 @@
 
 .login-form {
     height: 40%;
-    width: 30%;
+    width: 50%;
     border: 1px solid #ddd; /* Add a subtle border */
     padding: 40px;
     background-color: #f9f9f9; /* Light background color */
@@ -61,8 +61,9 @@
   }
   
   .status{
-    width: 90%;
-    margin-top: 20px;
+    height: 30px;
+    width: 50%;
+    margin-top: 3%;
     background-color: #160c0c;
     color: #fdfeff;
     height: 30px;
