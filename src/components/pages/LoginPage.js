@@ -1,6 +1,6 @@
 import AuthContext from '../../store/AuthContext';
 import './Styles/LoginPage.css';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef,} from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const LoginPage = () => {
@@ -69,8 +69,11 @@ const LoginPage = () => {
           <input type="password" ref={passwordInputRef} required />
         </div>
         <button type="submit" className="login-button">
-          Login
+        <a href="/profile" className="login-button">Login</a>
         </button>
+        <div>
+        <Link to='/forgot'>Forgot Password?</Link>
+        </div>
       </form>
       <p>
         Don't have an account? <Link to="/signup">Sign Up</Link>

@@ -5,7 +5,7 @@
 .navbar li{
     list-style: none;
     padding: 5%;
-    color: rgb(244, 217, 217);
+    color: rgb(249, 248, 248);
 }
 ul{
     display: flex;
@@ -15,7 +15,7 @@ ul{
     margin-top: 0;
 }
 a{
-    color: rgb(165, 154, 154);
+    color: rgb(249, 249, 249);
     text-decoration: none;
 }
 
