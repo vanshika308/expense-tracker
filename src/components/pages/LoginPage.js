@@ -68,9 +68,7 @@ const LoginPage = () => {
           <label>Password:</label>
           <input type="password" ref={passwordInputRef} required />
         </div>
-        <button type="submit" className="login-button">
-        <a href="/profile" className="login-button">Login</a>
-        </button>
+        <button type="submit" className="login-button">Login</button>
         <div>
         <Link to='/forgot'>Forgot Password?</Link>
         </div>

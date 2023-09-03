@@ -7,6 +7,7 @@ import AuthContext from './store/AuthContext';
 import ProfilePage from './components/pages/ProfilePage';
 import SignUpPage from './components/pages/SignupPage';
 import ForgotPassword from './components/pages/ForgotPassword';
+import HomePage from './components/pages/HomePage';
 
 function App() {
   const authcntxt = useContext(AuthContext);
@@ -18,11 +19,12 @@ function App() {
         <Route path='/' exact>
           <LoginPage/>
         </Route>
+        {authcntxt.isLoggedIn && <HomePage/>}
         <Route path="/profile" exact>
           {authcntxt.isLoggedIn ? <ProfilePage /> : <Redirect to="/login" />}
         </Route>
         <Route path="/login">
-          {!authcntxt.isLoggedIn ? <LoginPage /> : <Redirect to="/profile" />}
+          {!authcntxt.isLoggedIn ? <LoginPage /> : <Redirect to="/home" />}
         </Route>
         <Route path="/signup">
           {!authcntxt.isLoggedIn ? <SignUpPage/> : <Redirect to="/profile" />}
