@@ -4,7 +4,8 @@ import Header from './components/UI/Header';
 import LoginPage from './components/pages/LoginPage';
 import { useContext } from 'react';
 import AuthContext from './store/AuthContext';
-import HomePage from './components/pages/HomePage';
+import ProfilePage from './components/pages/ProfilePage';
+import SignUpPage from './components/pages/SignupPage';
 
 function App() {
   const authcntxt = useContext(AuthContext);
@@ -13,11 +14,14 @@ function App() {
     <Router>
       <Header />
       <Switch>
-        <Route path="/home" exact>
-          {authcntxt.isLoggedIn ? <HomePage /> : <Redirect to="/login" />}
+        <Route path="/profile" exact>
+          {authcntxt.isLoggedIn ? <ProfilePage /> : <Redirect to="/login" />}
         </Route>
         <Route path="/login">
-          {!authcntxt.isLoggedIn ? <LoginPage /> : <Redirect to="/home" />}
+          {!authcntxt.isLoggedIn ? <LoginPage /> : <Redirect to="/profile" />}
+        </Route>
+        <Route path="/signup">
+          {!authcntxt.isLoggedIn ? <SignUpPage/> : <Redirect to="/profile" />}
         </Route>
       </Switch>
     </Router>
