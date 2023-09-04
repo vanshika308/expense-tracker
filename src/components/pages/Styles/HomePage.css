@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40vh; /* This makes the container take up the full height of the viewport */
+    height: 50vh; 
   }
   
   .page-title {

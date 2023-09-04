@@ -1,8 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom'; // Import useHistory
-import AuthContext from '../../store/AuthContext'; // Import your AuthContext
+import { useHistory } from 'react-router-dom';
+import AuthContext from '../../store/AuthContext';
 import './Styles/SignUpPage.css';
-
 
 const SignUpPage = () => {
   const emailInputRef = useRef();
@@ -10,7 +9,7 @@ const SignUpPage = () => {
   const confirmPasswordInputRef = useRef();
   const [isLogin, setIsLogin] = useState(false);
   const authcntxt = useContext(AuthContext);
-  const history = useHistory(); // Get the history object
+  const history = useHistory();
 
   useEffect(() => {
     if (!authcntxt.token) {
@@ -20,12 +19,9 @@ const SignUpPage = () => {
     }
   }, [authcntxt.token]);
 
-  const switchAuthModeHandler = () => {
-    setIsLogin((prevState) => !prevState);
-  };
 
   const redirectToLoginPage = () => {
-    history.push('/login'); // Navigate to the login page
+    history.push('/login'); 
   };
 
   const SubmitHandler = (event) => {
@@ -34,14 +30,13 @@ const SignUpPage = () => {
     const enteredPassword = passwordInputRef.current.value;
     const enteredConfirmPassword = confirmPasswordInputRef.current.value;
 
-    // Check if passwords match
     if (!isLogin && enteredPassword !== enteredConfirmPassword) {
       alert('Passwords do not match');
       return;
     }
 
-    let url= 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDuGcgdMdoEb10Z2SKOOb8vttuUJsRYfDg';
-  
+    let url =
+      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDuGcgdMdoEb10Z2SKOOb8vttuUJsRYfDg';
 
     fetch(url, {
       method: 'POST',
@@ -58,17 +53,15 @@ const SignUpPage = () => {
         if (res.ok) {
           return res.json();
         } else {
-          res.json().then((data) => {
-            console.log(data);
+          return res.json().then((data) => {
             alert(data.error.message);
+            throw new Error(data.error.message);
           });
         }
       })
-      .then((data) => {
+      .then(() => {
         setIsLogin(true);
-        authcntxt.login(data.idToken, enteredEmail);
-        console.log('User Has successfully logged in!!');
-        redirectToLoginPage(); // Redirect after successful signup
+        history.push('/login'); 
       })
       .catch((error) => {
         console.log(error);
@@ -79,26 +72,31 @@ const SignUpPage = () => {
     <div className="signup-page">
       <form className="signup-form">
         <label>Email</label>
-        <input placeholder="Enter Your Email" type="email" required ref={emailInputRef} />
+        <input
+          placeholder="Enter Your Email"
+          type="email"
+          required
+          ref={emailInputRef}
+        />
         <br />
         <label>Password</label>
-        <input placeholder="Enter Your Password" type="password" required ref={passwordInputRef} />
+        <input
+          placeholder="Enter Your Password"
+          type="password"
+          required
+          ref={passwordInputRef}
+        />
         <br />
-
-        {!isLogin && (
-          <>
-            <label>Confirm Password</label>
-            <input
-              placeholder="Confirm Your Password"
-              type="password"
-              required
-              ref={confirmPasswordInputRef}
-            />
-          </>
-        )}
+        <label>Confirm Password</label>
+        <input
+          placeholder="Confirm Your Password"
+          type="password"
+          required
+          ref={confirmPasswordInputRef}
+        />
 
         <button className="signup-button" type="submit" onClick={SubmitHandler}>
-          {isLogin ? 'Login' : 'Sign up'}
+          Sign up
         </button>
         <br />
         <button type="button" className="status" onClick={redirectToLoginPage}>
@@ -107,6 +105,6 @@ const SignUpPage = () => {
       </form>
     </div>
   );
-}
+};
 
 export default SignUpPage;

@@ -16,22 +16,21 @@ function App() {
     <Router>
       <Header />
       <Switch>
-        <Route path='/' exact>
-          <LoginPage/>
-        </Route>
-        {authcntxt.isLoggedIn && <HomePage/>}
-        <Route path="/profile" exact>
+        <Route path='/' exact component={LoginPage} />
+        <Route path='/profile' exact>
           {authcntxt.isLoggedIn ? <ProfilePage /> : <Redirect to="/login" />}
         </Route>
-        <Route path="/login">
+        <Route path='/login'>
           {!authcntxt.isLoggedIn ? <LoginPage /> : <Redirect to="/home" />}
         </Route>
-        <Route path="/signup">
-          {!authcntxt.isLoggedIn ? <SignUpPage/> : <Redirect to="/profile" />}
+        <Route path='/signup'>
+          {!authcntxt.isLoggedIn ? <SignUpPage /> : <Redirect to="/login" />}
         </Route>
-        <Route path='/forgot'>
-          <ForgotPassword/>
+        <Route path='/forgot' component={ForgotPassword} />
+        <Route path='/home'>
+          {authcntxt.isLoggedIn ? <HomePage /> : <Redirect to="/login" />}
         </Route>
+        <Redirect to='/' />
       </Switch>
     </Router>
   );

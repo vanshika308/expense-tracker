@@ -22,7 +22,7 @@ const ProfilePage = () => {
          };
 
          fetch(
-            `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDuGcgdMdoEb10Z2SKOOb8vttuUJsRYfDg`, // Replace [API_KEY] with your Firebase project's Web API Key
+            `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDuGcgdMdoEb10Z2SKOOb8vttuUJsRYfDg`, 
             {
                method: "POST",
                headers: {

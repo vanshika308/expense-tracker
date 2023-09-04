@@ -1,13 +1,14 @@
 import AuthContext from '../../store/AuthContext';
 import './Styles/LoginPage.css';
 import { useContext, useEffect, useRef,} from 'react';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link,useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const LoginPage = () => {
 
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const authcntxt = useContext(AuthContext);
+  const history = useHistory();
 
   
 
@@ -51,6 +52,7 @@ const LoginPage = () => {
       .then((data) => {
         authcntxt.login(data.idToken, enteredEmail);
         console.log('User Has successfully logged in!!');
+        history.push('/home');
       })
       .catch((error) => {
         console.log(error);
