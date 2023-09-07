@@ -1,15 +1,15 @@
-import { useState, useEffect, useContext } from 'react';
-import AuthContext from '../../store/AuthContext';
+import { useState, useContext } from 'react';
 import './Styles/HomePage.css';
 import ExpenseList from '../Expenses/ExpenseList';
+import ExpenseContext from '../../store/ExpenseContext';
 
 const HomePage = () => {
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Food');
-  const [expenses, setExpenses] = useState([]);
 
-  const authcntxt= useContext(AuthContext);
+
+  const expensecntxt = useContext(ExpenseContext);
 
   const amountChangeHandler = (event) => {
     setAmount(parseInt(event.target.value));
@@ -23,48 +23,18 @@ const HomePage = () => {
     setSelectedCategory(event.target.value);
   };
 
-  const modifiedEmail = authcntxt.email.replace(/[@.]/g, '');
-
-
-  useEffect(() => {
-    fetch(`https://expense-tracker-233c3-default-rtdb.firebaseio.com/expenses/${modifiedEmail}.json`,{
-      method: "GET",  
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data) {
-        const expensesArray = Object.values(data); 
-        setExpenses(expensesArray);
-        console.log(expenses)
-      }
-    })
-    .catch((error) => {
-      console.error('Error retrieving expenses:', error);
-    });
-  }, [modifiedEmail,expenses]);
-
   const addExpenseHandler = (event) => {
     event.preventDefault();
-    const newExpense = {
+    expensecntxt.addExpense({
       amount: amount,
       description: description,
       category: selectedCategory,
-    };
-
-    fetch(`https://expense-tracker-233c3-default-rtdb.firebaseio.com/expenses/${modifiedEmail}.json`,{
-      method:'POST',
-      body : JSON.stringify({...newExpense}),
-      headers:{'Content-Type':'application/JSON'} 
-    })
-
+    });
     setAmount('');
-    setSelectedCategory('');
+    setDescription('');
+    setSelectedCategory('Food');
   };
-
+  
   return (
     <>
     <form onSubmit={addExpenseHandler}>
@@ -101,18 +71,18 @@ const HomePage = () => {
             Category
           </label>
           <select
-  name="dropdown"
-  className="dropdown"
-  value={selectedCategory}
-  onChange={categoryChangeHandler}
->
-  <option value="Food">Food</option>
-  <option value="Petrol">Petrol</option>
-  <option value="Salary">Salary</option>
-  <option value="Rent">Rent</option>
-  <option value="Grocery">Grocery</option>
-  <option value="Hygiene">Hygiene</option>
-</select>
+            name="dropdown"
+            className="dropdown"
+            value={selectedCategory}
+            onChange={categoryChangeHandler}
+          >
+           <option value="Food">Food</option>
+          <option value="Petrol">Petrol</option>
+          <option value="Salary">Salary</option>
+          <option value="Rent">Rent</option>
+          <option value="Grocery">Grocery</option>
+          <option value="Hygiene">Hygiene</option>
+        </select>
 
         </div>
         <button type="submit" className="submit-button">
@@ -121,7 +91,7 @@ const HomePage = () => {
       </div>
     </form>
     <div className="expense-list-container">
-        <ExpenseList expenses={expenses} />
+    <ExpenseList expenses={expensecntxt.expenses}/>
      </div>
     </>
   );

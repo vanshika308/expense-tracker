@@ -4,6 +4,8 @@ import ProfileUpdate from './ProfileUpdate';
 import './Styles/ProfilePage.css';
 
 const ProfilePage = () => {
+
+   
    const [update, setUpdate] = useState(false);
    const [verificationSent, setVerificationSent] = useState(false); 
    const authContext = useContext(AuthContext);

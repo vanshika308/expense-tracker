@@ -16,7 +16,9 @@ function App() {
     <Router>
       <Header />
       <Switch>
-        <Route path='/' exact component={LoginPage} />
+        <Route path='/' exact>
+          {authcntxt.isLoggedIn? <HomePage/> : <LoginPage/>}
+        </Route> 
         <Route path='/profile' exact>
           {authcntxt.isLoggedIn ? <ProfilePage /> : <Redirect to="/login" />}
         </Route>
