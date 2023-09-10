@@ -1,32 +1,31 @@
-import AuthContext from '../../store/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
 import './Styles/LoginPage.css';
-import { useContext, useEffect, useRef,} from 'react';
-import { Link,useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useEffect, useRef } from 'react';
+import { authenticationAction } from '../../store/auth';
+import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const LoginPage = () => {
-
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
-  const authcntxt = useContext(AuthContext);
   const history = useHistory();
+  const dispatch = useDispatch();
 
+  const authenticationToken = useSelector((state) => state.auth.token);
   
-
   useEffect(() => {
-    if (!authcntxt.token) {
+    if (!authenticationToken) {
       emailInputRef.current.value = '';
       passwordInputRef.current.value = '';
     }
-  }, [authcntxt.token]);
-
+  }, [authenticationToken]);
 
   const submitHandler = (event) => {
     event.preventDefault();
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
-    let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDuGcgdMdoEb10Z2SKOOb8vttuUJsRYfDg';
-    
+    let url =
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDuGcgdMdoEb10Z2SKOOb8vttuUJsRYfDg';
 
     fetch(url, {
       method: 'POST',
@@ -50,8 +49,12 @@ const LoginPage = () => {
         }
       })
       .then((data) => {
-        authcntxt.login(data.idToken, enteredEmail);
-        console.log('User Has successfully logged in!!');
+        // Dispatch the action with idToken and email properties
+        console.log(data.idToken)
+        console.log(enteredEmail)
+        dispatch(authenticationAction.login({ token: data.idToken, email: enteredEmail }));
+        console.log(authenticationAction)
+        console.log('User has successfully logged in!!');
         history.push('/home');
       })
       .catch((error) => {
@@ -70,9 +73,11 @@ const LoginPage = () => {
           <label>Password:</label>
           <input type="password" ref={passwordInputRef} required />
         </div>
-        <button type="submit" className="login-button">Login</button>
+        <button type="submit" className="login-button">
+          Login
+        </button>
         <div>
-        <Link to='/forgot'>Forgot Password?</Link>
+          <Link to="/forgot">Forgot Password?</Link>
         </div>
       </form>
       <p>
@@ -80,6 +85,6 @@ const LoginPage = () => {
       </p>
     </div>
   );
-}
+};
 
 export default LoginPage;

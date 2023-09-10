@@ -1,10 +1,11 @@
-import { useContext, useRef,useEffect ,useState} from "react"
-import AuthContext from "../../store/AuthContext";
+import { useRef,useEffect ,useState} from "react"
 import './Styles/ProfileUpdate.css';
+import { useSelector } from "react-redux";
 
 const ProfileUpdate =()=>{
 
-    const authcntxt = useContext(AuthContext);
+  const authenticationToken = useSelector((state) => state.auth.token);
+
 
     const nameInputRef=useRef();
     const photoUrlRef = useRef();
@@ -13,15 +14,13 @@ const ProfileUpdate =()=>{
     const [fullName,setFullName]=useState('');
     const [photoUrl,setPhotoUrl]=useState('')
 
-    useEffect(() => {
-        fetchUserProfile();
-      }, [authcntxt.token,authcntxt.email]);
+  
 
     const fetchUserProfile=()=>{
         const requestBody = {
-            idToken: authcntxt.token,
+            idToken: authenticationToken,
           };
-          console.log(authcntxt.token)
+          console.log(authenticationToken)
 
       
           fetch(
@@ -56,6 +55,13 @@ const ProfileUpdate =()=>{
             });
     };
 
+    useEffect(() => {
+      if (authenticationToken) {
+        fetchUserProfile();
+      }
+    }, []);
+    
+
 
     const submitHandler=(event)=>{
 
@@ -64,7 +70,7 @@ const ProfileUpdate =()=>{
         const updatedPhotoUrl = photoUrlRef.current.value;
     
         const requestBody = {
-          idToken: authcntxt.token,
+          idToken: authenticationToken,
           displayName: updatedName,
           photoUrl: updatedPhotoUrl,
           returnSecureToken: true,

@@ -1,21 +1,23 @@
-import React, { useContext, useState } from "react";
-import AuthContext from '../../store/AuthContext';
+import React, {  useState } from "react";
 import ProfileUpdate from './ProfileUpdate';
 import './Styles/ProfilePage.css';
+import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
 
    
    const [update, setUpdate] = useState(false);
    const [verificationSent, setVerificationSent] = useState(false); 
-   const authContext = useContext(AuthContext);
+
+   const authenticationToken = useSelector((state) => state.auth.token);
+
 
    const handleUpdateClick = () => {
       setUpdate(true);
    };
 
    const sendVerificationEmail = () => {
-      const idToken = authContext.token;
+      const idToken = authenticationToken;
 
       if (idToken) {
          const requestBody = {

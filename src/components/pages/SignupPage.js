@@ -1,23 +1,25 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import {  useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import AuthContext from '../../store/AuthContext';
 import './Styles/SignUpPage.css';
+import { useSelector } from 'react-redux';
 
 const SignUpPage = () => {
+
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
   const [isLogin, setIsLogin] = useState(false);
-  const authcntxt = useContext(AuthContext);
   const history = useHistory();
 
+  const authentication = useSelector(state=> state.auth.isAuthenticated)
+
   useEffect(() => {
-    if (!authcntxt.token) {
+    if (!authentication) {
       emailInputRef.current.value = '';
       passwordInputRef.current.value = '';
       confirmPasswordInputRef.current.value = '';
     }
-  }, [authcntxt.token]);
+  }, [authentication]);
 
 
   const redirectToLoginPage = () => {

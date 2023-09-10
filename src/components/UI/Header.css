@@ -1,10 +1,10 @@
 .navbar{
     background-color: rgb(16, 1, 31);
-    height: 8rem;
+    height: 6rem;
 }
 .navbar li{
     list-style: none;
-    padding: 5%;
+    padding: 3%;
     color: rgb(249, 248, 248);
 }
 ul{
