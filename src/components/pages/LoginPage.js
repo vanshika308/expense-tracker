@@ -11,6 +11,10 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const authenticationToken = useSelector((state) => state.auth.token);
+
+  const isDarkTheme = useSelector((state) => state.theme.isDark);
+
+  const currentTheme = isDarkTheme ? 'dark-theme' : 'light-theme';
   
   useEffect(() => {
     if (!authenticationToken) {
@@ -63,8 +67,8 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-page">
-      <form onSubmit={submitHandler} className="login-form">
+    <div className={`login-page ${currentTheme}`}>
+      <form onSubmit={submitHandler} className={`login-form ${currentTheme}`}>
         <div className="form-control">
           <label>Email:</label>
           <input type="email" ref={emailInputRef} required />

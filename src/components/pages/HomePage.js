@@ -17,6 +17,10 @@ const HomePage = () => {
 
   const modifiedEmail = authenticationEmail ? authenticationEmail.replace(/[.@]/g, '') : '';
 
+  const isDarkTheme = useSelector((state) => state.theme.isDark);
+
+  const currentTheme = isDarkTheme ? 'dark-theme' : 'light-theme';
+
 
 
   const amountChangeHandler = (event) => {
@@ -98,11 +102,38 @@ const HomePage = () => {
       });
   };
 
+  const downloadCSV = () => {
+    const generateCSV = (itemsArr) => {
+      const csvRows = [];
+      const headers = ['Date', 'Description', 'Category', 'Amount'];
+      csvRows.push(headers.join(','));
+
+      itemsArr.forEach((i) => {
+        const row = [
+          i.date,
+          i.description,
+          i.category,
+          i.amount
+        ];
+        csvRows.push(row.join(","));
+      });
+
+      return csvRows.join("\n");
+    };
+    // console.log([generateCSV(expense.items)])
+    const csvContent = generateCSV(expenses);
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = "expenses.csv";
+    downloadLink.click();
+  };
+  
   return (
-    <>
+    <div className={`expense-page ${currentTheme}`}>
     {console.log(authenticationEmail)}
-      <form onSubmit={addExpenseHandler}>
-        <div className="container">
+      <form onSubmit={addExpenseHandler} className={`expense-form ${currentTheme}`}>
+        <div className="expense-container">
           <h1 className="page-title">
             <b>Welcome to the Expense-Tracker App</b>
           </h1>
@@ -163,7 +194,13 @@ const HomePage = () => {
         )}
 
       </div>
-    </>
+      <div className="download-button-container">
+      <button className="download-button"onClick={downloadCSV}>
+        Download CSV
+      </button>
+      </div>
+      
+    </div>
   );
 };
 

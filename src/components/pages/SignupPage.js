@@ -1,17 +1,20 @@
-import {  useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Styles/SignUpPage.css';
 import { useSelector } from 'react-redux';
 
 const SignUpPage = () => {
-
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
   const [isLogin, setIsLogin] = useState(false);
   const history = useHistory();
 
-  const authentication = useSelector(state=> state.auth.isAuthenticated)
+  const isDarkTheme = useSelector((state) => state.theme.isDark);
+
+  const currentTheme = isDarkTheme ? 'dark-theme' : 'light-theme';
+
+  const authentication = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
     if (!authentication) {
@@ -21,9 +24,8 @@ const SignUpPage = () => {
     }
   }, [authentication]);
 
-
   const redirectToLoginPage = () => {
-    history.push('/login'); 
+    history.push('/login');
   };
 
   const SubmitHandler = (event) => {
@@ -63,7 +65,7 @@ const SignUpPage = () => {
       })
       .then(() => {
         setIsLogin(true);
-        history.push('/login'); 
+        history.push('/login');
       })
       .catch((error) => {
         console.log(error);
@@ -71,37 +73,45 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="signup-page">
-      <form className="signup-form">
+    <div className={`signup-page ${currentTheme}`}>
+      <form className={`signup-form ${currentTheme}`}>
         <label>Email</label>
         <input
-          placeholder="Enter Your Email"
           type="email"
           required
           ref={emailInputRef}
+          className={`${currentTheme}`}
         />
         <br />
         <label>Password</label>
         <input
-          placeholder="Enter Your Password"
           type="password"
           required
           ref={passwordInputRef}
+          className={`${currentTheme}`}
         />
         <br />
         <label>Confirm Password</label>
         <input
-          placeholder="Confirm Your Password"
           type="password"
           required
           ref={confirmPasswordInputRef}
+          className={`${currentTheme}`}
         />
 
-        <button className="signup-button" type="submit" onClick={SubmitHandler}>
+        <button
+          className={`signup-button ${currentTheme}`}
+          type="submit"
+          onClick={SubmitHandler}
+        >
           Sign up
         </button>
         <br />
-        <button type="button" className="status" onClick={redirectToLoginPage}>
+        <button
+          type="button"
+          className={`status ${currentTheme}`}
+          onClick={redirectToLoginPage}
+        >
           Already have an account? Sign in
         </button>
       </form>

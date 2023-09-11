@@ -5,8 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './store/index';
+import { themeActions } from './store/theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
+const storedTheme = localStorage.getItem('current-theme');
+
+if (storedTheme === 'light' || storedTheme === 'dark') {
+  store.dispatch(themeActions.setTheme({ theme: storedTheme }));
+}
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

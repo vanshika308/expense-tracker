@@ -1,54 +1,97 @@
-.container {
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .expense-list-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-  }
-  
-  .page-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .input-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
-  
-  .input-field {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .dropdown {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .submit-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .submit-button:hover {
-    background-color: #0056b3;
-  }
-  
+.expense-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  width: 50%;
+  justify-content: center;
+  height: 70vh;
+  background-color: #ceb7b7;
+  margin: auto;
+  text-align: center;
+  padding: 20px; 
+  border-radius: 10px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+.expense-container .page-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.expense-container .form-group {
+  margin-bottom: 20px;
+}
+
+.expense-container .input-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.expense-container .input-field,
+.expense-container .dropdown {
+  width: 70%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.expense-container .submit-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px auto;
+  width: 50%;
+}
+
+.expense-container .submit-button:hover {
+  background-color: #0056b3;
+}
+
+.expense-page.light-theme {
+  background-color: #ffffff;
+  color: #000000; 
+}
+
+.expense-page.dark-theme {
+  padding-top: 30px;
+  background-color: #000000;
+  color: #a83838; 
+}
+
+.expense-form.light-theme {
+  padding-top: 30px;
+  background-color: #ffffff;
+  color: #000000; 
+}
+
+.expense-form.dark-theme {
+  background-color: #000000;
+  color: #000000; 
+}
+
+
+.expense-list-container{
+  display : flex ;
+  margin: auto;
+  justify-content: center;
+}
+
+.download-button{
+  background:#035706;
+  color: white; 
+  padding: 10px;
+  font-size: medium;
+  border-radius: 5px;
+  border: none;
+
+}
+
+.download-button-container{
+  display:flex;
+  justify-content: center;
+  padding: 25px;
+}
